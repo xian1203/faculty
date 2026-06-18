@@ -1,0 +1,463 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Debt Management | RFID Honesty Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist+Mono:wght@400&amp;family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pulsate {
+            animation: pulse-animation 2s infinite;
+        }
+        @keyframes pulse-animation {
+            0% { box-shadow: 0 0 0 0px rgba(34, 197, 94, 0.4); }
+            100% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#cfbcff",
+                        "primary-fixed-dim": "#cfbcff",
+                        "on-primary-fixed-variant": "#4f378a",
+                        "tertiary": "#765b00",
+                        "surface-dim": "#ded8e0",
+                        "on-primary-fixed": "#22005d",
+                        "surface-container-high": "#ece6ee",
+                        "secondary-fixed-dim": "#cdc0e9",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "background": "#fdf7ff",
+                        "surface-tint": "#6750a4",
+                        "on-primary-container": "#e0d2ff",
+                        "surface-container": "#f2ecf4",
+                        "on-secondary-fixed": "#1f1635",
+                        "surface-variant": "#e6e0e9",
+                        "secondary-fixed": "#e9ddff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e6e0e9",
+                        "primary-fixed": "#e9ddff",
+                        "primary": "#4f378a",
+                        "on-error": "#ffffff",
+                        "surface": "#fdf7ff",
+                        "inverse-surface": "#322f35",
+                        "tertiary-fixed": "#ffdf93",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "on-secondary-fixed-variant": "#4b4263",
+                        "inverse-on-surface": "#f5eff7",
+                        "outline-variant": "#cbc4d2",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#e7c365",
+                        "on-surface": "#1d1b20",
+                        "on-secondary-container": "#645a7d",
+                        "surface-bright": "#fdf7ff",
+                        "primary-container": "#6750a4",
+                        "on-tertiary-fixed": "#241a00",
+                        "tertiary-container": "#c9a74d",
+                        "surface-container-low": "#f8f2fa",
+                        "outline": "#7a7582",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#503d00",
+                        "secondary-container": "#e1d4fd",
+                        "secondary": "#63597c",
+                        "on-background": "#1d1b20",
+                        "on-surface-variant": "#494551"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "container-padding": "24px",
+                        "section-margin": "32px",
+                        "card-gap": "20px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "mono-data": ["Geist Mono"],
+                        "headline-lg": ["Geist"],
+                        "label-md": ["Geist"],
+                        "display": ["Geist"],
+                        "body-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-md": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "headline-sm": ["Geist"]
+                    },
+                    "fontSize": {
+                        "mono-data": ["13px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+<!-- Side Navigation Bar -->
+<aside class="w-[280px] h-screen fixed left-0 top-0 hidden lg:flex flex-col bg-surface border-r border-outline-variant shadow-sm py-6 z-50">
+<div class="px-6 mb-8 flex flex-col items-center gap-3">
+<img alt="NDKC Logo" class="w-20 h-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAELEeG4EQPxYss6fn1b2fdg8miRK4Kf8xxSEbxohFSaQGsfqVdv2CAUeCJh1iopJi2z3jnoqtOPtdHfmtMxYz7LEy2Gysvt8mBYMV2-vmt7G7O5H7V5xsIcFVEMBAWkOXqB2WhI5M92PLOakU8K0PsXRNtX2g1ZqTXfUBZQKndiw2tYGZBuUFIgl0x_fxQxJHYFWvUaHkw63km2MjAS9jWpP8PPkF9xrVY6cJlSu_W7Qso5Oy_bw0jxL9NeIftnZPSAdVmIqeA-djT">
+<div class="text-center">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">RFID Honesty Admin</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Management Console</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<div class="flex items-center px-4 py-3 cursor-pointer rounded-lg hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="flex items-center px-4 py-3 cursor-pointer rounded-lg hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-3" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-md text-label-md">Products</span>
+</div>
+<div class="flex items-center px-4 py-3 cursor-pointer rounded-lg hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-3" data-icon="shelves">shelves</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</div>
+<div class="flex items-center px-4 py-3 cursor-pointer rounded-lg hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-3" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md">Transactions</span>
+</div>
+<div class="flex items-center px-4 py-3 cursor-pointer rounded-lg hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-3" data-icon="contactless">contactless</span>
+<span class="font-label-md text-label-md">RFID Accounts</span>
+</div>
+<!-- Active Tab: Debt Management -->
+<div class="flex items-center px-4 py-3 cursor-pointer rounded-lg text-primary font-bold border-r-4 border-primary bg-primary-container/10 transition-colors duration-200">
+<span class="material-symbols-outlined mr-3" data-icon="request_quote">request_quote</span>
+<span class="font-label-md text-label-md">Debt Management</span>
+</div>
+<div class="flex items-center px-4 py-3 cursor-pointer rounded-lg hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-3" data-icon="payments">payments</span>
+<span class="font-label-md text-label-md">Payments</span>
+</div>
+<div class="flex items-center px-4 py-3 cursor-pointer rounded-lg hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-3" data-icon="bar_chart">bar_chart</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</div>
+<div class="flex items-center px-4 py-3 cursor-pointer rounded-lg hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</div>
+</nav>
+<div class="px-4 mt-auto pt-4 border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary py-3 px-4 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="font-label-md">New Transaction</span>
+</button>
+<div class="mt-4 flex items-center px-4 py-3 cursor-pointer rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200">
+<span class="material-symbols-outlined mr-3" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="lg:pl-[280px] min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-40 w-full bg-surface/80 backdrop-blur-md border-b border-outline-variant px-6 py-3 flex justify-between items-center lg:pl-6">
+<div class="flex items-center gap-4">
+<div class="lg:hidden font-headline-sm text-headline-sm font-bold text-primary">HonestyStore</div>
+<div class="flex items-center bg-surface-container rounded-full px-4 py-2 border border-outline-variant w-64 lg:w-96 focus-within:ring-2 focus-within:ring-primary/40 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant text-sm mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-full placeholder:text-on-surface-variant" placeholder="Search debt ledger..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center mr-4">
+<span class="w-2 h-2 bg-green-500 rounded-full pulsate mr-2"></span>
+<span class="text-label-md font-label-md text-green-700">Live RFID Polling</span>
+</div>
+<button class="hover:bg-surface-container-low rounded-full p-2 text-on-surface-variant transition-all relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<button class="hover:bg-surface-container-low rounded-full p-2 text-on-surface-variant transition-all">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<p class="text-body-md font-semibold text-on-surface">Admin User</p>
+<p class="text-label-md text-on-surface-variant uppercase tracking-tighter">Finance Dept</p>
+</div>
+<img alt="Admin User Profile" class="w-10 h-10 rounded-full border-2 border-primary-container object-cover" data-alt="A professional close-up portrait of a university administrator in business casual attire. The individual has a friendly but authoritative expression, with a blurred office environment in the background that uses a cool color palette of whites and blues to convey a modern, reliable institutional atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIJZ2f4MN6LFX0lM_jWTf8RF5RjTi4qJW5sicSNCWO3G1ascRzAWZ4IeBAdTtYFszAwYvBmbiq0AQlDdIIu1UKt6JtruT03cO5tj-S00ou4xoN21eT6FewmJiMVCFBDG1OEzJm30vGynELMQPRLsoXbgaMuiIrj1Zy5WedwmzbS5SBPrMpou7NfBq1GWRlT-qxcesrMmqTiWnyyONcxEwOcMiFgmUk1jwLKzFd5vDpeIvcr2tMWOKYNDaUwH0Oi68Ki8F83m1zvZJG">
+</div>
+</div>
+</header>
+<div class="p-6 space-y-6">
+<!-- Header Summary Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Debt Management</h2>
+<p class="text-body-lg text-on-surface-variant mt-1">Total Outstanding Portfolio across <span class="font-bold text-primary">1,248 Active Accounts</span></p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-primary text-primary hover:bg-primary/5 active:scale-95 transition-all font-semibold">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+                        View Audit Log
+                    </button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-on-primary hover:opacity-90 active:scale-95 transition-all font-semibold shadow-sm">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+                        Settle Bulk Payments
+                    </button>
+</div>
+</div>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Metric 1 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col justify-between group hover:border-primary transition-colors">
+<div class="flex justify-between items-start">
+<span class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</span>
+<span class="text-green-600 flex items-center text-label-md font-bold">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="trending_up">trending_up</span>
+                            2.4% vs last mo
+                        </span>
+</div>
+<div class="mt-4">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Total Outstanding Debt</h3>
+<p class="text-headline-lg font-headline-lg text-on-surface mt-1">PHP 142,850.50</p>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col justify-between group hover:border-error transition-colors">
+<div class="flex justify-between items-start">
+<span class="p-3 bg-error-container/20 rounded-lg text-error">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</span>
+<span class="text-error flex items-center text-label-md font-bold">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="report">report</span>
+                            +12 new this week
+                        </span>
+</div>
+<div class="mt-4">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">High-Risk Accounts</h3>
+<p class="text-headline-lg font-headline-lg text-on-surface mt-1">84 <span class="text-body-md font-normal text-on-surface-variant">(&gt; PHP 500)</span></p>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col justify-between group hover:border-tertiary transition-colors">
+<div class="flex justify-between items-start">
+<span class="p-3 bg-tertiary-container/20 rounded-lg text-tertiary">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+</span>
+<span class="text-green-600 flex items-center text-label-md font-bold">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="check_circle">check_circle</span>
+                            Active Today
+                        </span>
+</div>
+<div class="mt-4">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Daily Recoveries</h3>
+<p class="text-headline-lg font-headline-lg text-on-surface mt-1">PHP 12,440.00</p>
+</div>
+</div>
+</div>
+<!-- Content Row: Table and Sidebar -->
+<div class="grid grid-cols-1 xl:grid-cols-4 gap-6">
+<!-- Main Table Section -->
+<div class="space-y-6 xl:col-span-4">
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<!-- Filters Bar -->
+<div class="px-6 py-4 border-b border-outline-variant flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-wrap gap-3">
+<select class="bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-body-md focus:ring-primary focus:border-primary">
+<option>All Departments</option>
+<option>CAS</option>
+<option>CBA</option>
+<option>CTE</option>
+<option>Admin</option>
+</select>
+<select class="bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-body-md focus:ring-primary focus:border-primary">
+<option>All Roles</option>
+<option>Faculty</option>
+<option>Staff</option>
+<option>Student</option>
+</select>
+<select class="bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-body-md focus:ring-primary focus:border-primary">
+<option>Debt: Any Range</option>
+<option>Below PHP 100</option>
+<option>PHP 100 - 500</option>
+<option>Above PHP 500</option>
+</select>
+</div>
+<button class="text-on-surface-variant hover:text-primary flex items-center gap-1 text-label-md font-bold transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                                Reset Filters
+                            </button>
+</div>
+<!-- Ledger Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-highest/30">
+<tr>
+<th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-wider">RFID User</th>
+<th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-wider">User ID</th>
+<th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Department</th>
+<th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Last Trans</th>
+<th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-wider text-right">Current Debt</th>
+<th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="User" class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="A professional headshot of a male faculty member in a clean, brightly lit office. He wears a neutral-toned button-down shirt, conveying a sense of academic reliability and approachability. The image style is sharp and modern, consistent with high-end administrative dashboards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiPtvgtaJqPaK_VgNGL2eh2_ReQdJEmP3AU4qofZuxbcRc6DOcqsWNoAmSkmMKT5ayCTdNN2ZltReZGe2cXjkdX4ap6ldKliEOJWE5hIzQY63k528Ks-efEjva1RFZqN2-N7ImoRLWT1_CTrJiD08Cll-Pf4tlqCld_zGcznWJRzTEyf_ET2_DsUlQ4SvbixYMYUy0QS_pUi08QT4G_-_oLPbcHTIG_E4GnOjfQXtZhmx6tli1KmetMNgtC-gC8kO0lQ9C0LiMwMSx">
+<div>
+<p class="font-bold text-on-surface">Mark J. Solis</p>
+<p class="text-label-md text-on-surface-variant">Faculty</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">2024-NDKC-0482</td>
+<td class="px-6 py-4 text-body-md">CAS - Humanities</td>
+<td class="px-6 py-4 text-body-md">2023-11-24 14:20</td>
+<td class="px-6 py-4 text-right font-bold text-error">PHP 1,240.00</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-error-container/20 text-error text-label-md font-bold inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                                Over Limit
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right"><div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity"><button class="p-2 hover:bg-primary-container/20 text-primary rounded-lg transition-colors" title="Settle Payment"><span class="material-symbols-outlined text-[20px]">payments</span></button><button class="p-2 hover:bg-surface-container-high text-on-surface-variant rounded-lg transition-colors" title="Adjust Balance"><span class="material-symbols-outlined text-[20px]">edit</span></button><button class="p-2 hover:bg-surface-container-high text-on-surface-variant rounded-lg transition-colors" title="Send Reminder"><span class="material-symbols-outlined text-[20px]">notifications</span></button></div></td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="User" class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="A portrait of a cheerful female administrative staff member. She is dressed in corporate attire with a soft-focus campus background visible through a window, indicating a pleasant and productive academic environment. The lighting is warm and natural." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIXeXfQdS87um8jPWK8NyexCyxeqz2YIUhU5QftXnSoZcrCOnyQ2c29wyz_oh24KwFxCI1fjCEQ546HVIO5k0MLVSUqNDecwOIfeY74oKLsQH357bEsMNddoNhK5nQweeRO2wg8xvxIL9SOzw6farY128K-TjlH8JsdyCOIOat7rxzjVPUTc1_Zuqb1vEkOh-6r-fg2ahujjiirKJND6UIgK86l6neor6mTylLWgxK-R0SD4S6tC-4w90EkmhJeXYDiSawKQe8GJc1">
+<div>
+<p class="font-bold text-on-surface">Elena Ramos</p>
+<p class="text-label-md text-on-surface-variant">Staff</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">2024-NDKC-1109</td>
+<td class="px-6 py-4 text-body-md">Registrar's Office</td>
+<td class="px-6 py-4 text-body-md">2023-11-25 09:15</td>
+<td class="px-6 py-4 text-right font-bold text-tertiary">PHP 420.50</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-tertiary-container/20 text-tertiary text-label-md font-bold inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                                Warning
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right"><div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity"><button class="p-2 hover:bg-primary-container/20 text-primary rounded-lg transition-colors" title="Settle Payment"><span class="material-symbols-outlined text-[20px]">payments</span></button><button class="p-2 hover:bg-surface-container-high text-on-surface-variant rounded-lg transition-colors" title="Adjust Balance"><span class="material-symbols-outlined text-[20px]">edit</span></button><button class="p-2 hover:bg-surface-container-high text-on-surface-variant rounded-lg transition-colors" title="Send Reminder"><span class="material-symbols-outlined text-[20px]">notifications</span></button></div></td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="User" class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="A portrait of a male student athlete in his varsity jacket, looking confident. The background is a clean, modern gym or campus plaza, reflecting the dynamic student life at a professional institution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZLgBMRpWCUtWo9qe1b4wjoPp1c0ov70nJXbBLmvGhSYX2VyPdXXGNDHM00WoVDLkTKmw0-kTAhqiX3aqtc_8fCKqDtsfYDiPbBAyeegKFC35sK7qzqjn5tbeR3o9ex3ygcdRDKHYoi32d2jNKx9pl6f_W7M3PopTueJFNlf2xTvZjYGht2eR5AXCITSpKVsmr-zyGa4ydL2gh2ldYOQhdW9H5THWq7j7FGUaZN_xt4PBDIEzQtnBoKgLYdaA5v4dTcXSaVny5PzbE">
+<div>
+<p class="font-bold text-on-surface">James Macatuno</p>
+<p class="text-label-md text-on-surface-variant">Student</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">2024-NDKC-5561</td>
+<td class="px-6 py-4 text-body-md">CBA - Accountancy</td>
+<td class="px-6 py-4 text-body-md">2023-11-25 11:45</td>
+<td class="px-6 py-4 text-right font-bold text-on-surface">PHP 85.00</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-label-md font-bold inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>
+                                                Normal
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right"><div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity"><button class="p-2 hover:bg-primary-container/20 text-primary rounded-lg transition-colors" title="Settle Payment"><span class="material-symbols-outlined text-[20px]">payments</span></button><button class="p-2 hover:bg-surface-container-high text-on-surface-variant rounded-lg transition-colors" title="Adjust Balance"><span class="material-symbols-outlined text-[20px]">edit</span></button><button class="p-2 hover:bg-surface-container-high text-on-surface-variant rounded-lg transition-colors" title="Send Reminder"><span class="material-symbols-outlined text-[20px]">notifications</span></button></div></td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="User" class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Close up of a female researcher in a lab setting, wearing a white coat and glasses. She looks diligent and focused. The background has soft clinical lighting with stainless steel surfaces, creating a systematic and clean visual atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlz2yBiXq4lePbMPL6rPc2ZN0Hz9zCC2PpFZs3YRz59zpElK_mmG3r8oaOz_1yax3mpLhk0i2zVIoEQgjkj6thauu5eFo7AEkaiJ6yeEOHDb--CeKDnPia6KOxVxDJOAcgcCT9P-wDpztgVjzwmXkGNbjdsiiU4DlIkFhGkBtQRODUKMN9DTZKn4ktMe3FqRG_OYpUi3PfG52uXEB-DhdM4Gd7xEHq7ACUbUUoy5SMUJ2w3BCz3Elzu8wMfIJCp_XAm7idFzfVn87s">
+<div>
+<p class="font-bold text-on-surface">Sara Villa</p>
+<p class="text-label-md text-on-surface-variant">Faculty</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">2024-NDKC-0012</td>
+<td class="px-6 py-4 text-body-md">Nursing Department</td>
+<td class="px-6 py-4 text-body-md">2023-11-20 16:30</td>
+<td class="px-6 py-4 text-right font-bold text-error">PHP 675.25</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-error-container/20 text-error text-label-md font-bold inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                                Over Limit
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right"><div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity"><button class="p-2 hover:bg-primary-container/20 text-primary rounded-lg transition-colors" title="Settle Payment"><span class="material-symbols-outlined text-[20px]">payments</span></button><button class="p-2 hover:bg-surface-container-high text-on-surface-variant rounded-lg transition-colors" title="Adjust Balance"><span class="material-symbols-outlined text-[20px]">edit</span></button><button class="p-2 hover:bg-surface-container-high text-on-surface-variant rounded-lg transition-colors" title="Send Reminder"><span class="material-symbols-outlined text-[20px]">notifications</span></button></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination -->
+<div class="px-6 py-4 border-t border-outline-variant flex items-center justify-between">
+<p class="text-body-md text-on-surface-variant">Showing <span class="font-bold">1-10</span> of 1,248 accounts</p>
+<div class="flex gap-1">
+<button class="p-2 rounded-lg hover:bg-surface-container-low text-on-surface-variant disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-bold">1</button>
+<button class="px-4 py-2 rounded-lg hover:bg-surface-container-low text-on-surface font-semibold">2</button>
+<button class="px-4 py-2 rounded-lg hover:bg-surface-container-low text-on-surface font-semibold">3</button>
+<button class="p-2 rounded-lg hover:bg-surface-container-low text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Settle Actions Sidebar -->
+
+</div>
+</div>
+</main>
+<script>
+        // Micro-interactions and effects
+        document.querySelectorAll('button, [cursor-pointer]').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Simple ripple/active effect feedback
+                this.classList.add('opacity-70');
+                setTimeout(() => this.classList.remove('opacity-70'), 100);
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('border-primary');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('border-primary');
+        });
+    </script>
+
+
+</body></html>

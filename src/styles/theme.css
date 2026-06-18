@@ -1,0 +1,280 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #15803d;
+  --primary-foreground: #ffffff;
+  --secondary: #1d4ed8;
+  --secondary-foreground: #ffffff;
+  --muted: #f1f5f9;
+  --muted-foreground: #475569;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: transparent;
+  --input-background: #f1f5f9;
+  --switch-background: #cbd5e1;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #15803d;
+  --chart-1: #15803d;
+  --chart-2: #1d4ed8;
+  --chart-3: #a16207;
+  --chart-4: #b91c1c;
+  --chart-5: #0891b2;
+  --radius: 0.5rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #15803d;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: #0f172a;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #15803d;
+}
+
+.dark {
+  /* Deep charcoal/black backgrounds */
+  --background: #0F0F14;
+  --foreground: #FFFFFF;
+
+  /* Card with subtle elevation */
+  --card: #1A1A1F;
+  --card-foreground: #FFFFFF;
+
+  /* Popover/dropdown */
+  --popover: #1A1A1F;
+  --popover-foreground: #FFFFFF;
+
+  /* Modern blue accent */
+  --primary: #4F7CFF;
+  --primary-foreground: #FFFFFF;
+
+  /* Secondary accent */
+  --secondary: #7C4DFF;
+  --secondary-foreground: #FFFFFF;
+
+  /* Muted backgrounds and text */
+  --muted: #25252B;
+  --muted-foreground: #B0B0B0;
+
+  /* Accent areas */
+  --accent: #25252B;
+  --accent-foreground: #FFFFFF;
+
+  /* Destructive/error states */
+  --destructive: #FF5555;
+  --destructive-foreground: #FFFFFF;
+
+  /* Subtle borders */
+  --border: #2A2A30;
+
+  /* Input fields */
+  --input: transparent;
+  --input-background: #25252B;
+
+  /* Switch/toggle background */
+  --switch-background: #3A3A40;
+
+  /* Focus ring */
+  --ring: #4F7CFF;
+
+  /* Font weights */
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+
+  /* Chart colors */
+  --chart-1: #4F7CFF;
+  --chart-2: #7C4DFF;
+  --chart-3: #FFA84D;
+  --chart-4: #FF5555;
+  --chart-5: #4DD4FF;
+
+  /* Sidebar */
+  --sidebar: #121212;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #4F7CFF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #25252B;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #2A2A30;
+  --sidebar-ring: #4F7CFF;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Aliases for HTML compatibility */
+  --color-surface: var(--card);
+  --color-on-surface: var(--card-foreground);
+  --color-surface-variant: var(--muted);
+  --color-on-surface-variant: var(--muted-foreground);
+  --color-outline-variant: var(--border);
+  --color-on-primary: var(--primary-foreground);
+  --color-on-background: var(--foreground);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /**
+  * Dark mode enhancements
+  */
+  .dark {
+    /* Glassmorphism card effect */
+    --glass-bg: rgba(26, 26, 31, 0.7);
+    --glass-border: rgba(79, 124, 255, 0.1);
+
+    /* Glow effects for active elements */
+    --glow-primary: 0 0 20px rgba(79, 124, 255, 0.3);
+    --glow-secondary: 0 0 20px rgba(124, 77, 255, 0.3);
+
+    /* Soft shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Glassmorphism utility classes */
+  .dark .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+  }
+
+  /* Glow effects on hover */
+  .dark button:hover:not(:disabled),
+  .dark .glow-hover:hover {
+    box-shadow: var(--glow-primary);
+  }
+
+  /* Enhanced focus states for dark mode */
+  .dark *:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: var(--glow-primary);
+  }
+
+  /**
+  * Default typography styles for HTML elements (h1-h4, p, label, button, input).
+  * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
+  */
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h4 {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  label {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  button {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  input {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+  }
+
+  /* Dark mode scrollbar styling */
+  .dark .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .dark .custom-scrollbar::-webkit-scrollbar-track {
+    background: #1A1A1F;
+  }
+
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #3A3A40;
+    border-radius: 4px;
+  }
+
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #4F7CFF;
+  }
+}

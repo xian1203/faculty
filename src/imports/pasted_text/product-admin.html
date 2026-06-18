@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Management | RFID Honesty Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#1f1635",
+                        "primary-fixed": "#e9ddff",
+                        "on-secondary-container": "#645a7d",
+                        "tertiary-fixed": "#ffdf93",
+                        "primary-container": "#6750a4",
+                        "surface-container-high": "#ece6ee",
+                        "outline-variant": "#cbc4d2",
+                        "on-primary-fixed-variant": "#4f378a",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#322f35",
+                        "on-secondary-fixed-variant": "#4b4263",
+                        "primary-fixed-dim": "#cfbcff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#22005d",
+                        "on-primary-container": "#e0d2ff",
+                        "on-background": "#1d1b20",
+                        "tertiary-container": "#c9a74d",
+                        "surface-tint": "#6750a4",
+                        "secondary": "#63597c",
+                        "secondary-fixed-dim": "#cdc0e9",
+                        "tertiary-fixed-dim": "#e7c365",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#f2ecf4",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#241a00",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f8f2fa",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e6e0e9",
+                        "secondary-container": "#e1d4fd",
+                        "primary": "#228b22", // Updated to Forest Green from Logo
+                        "surface-dim": "#ded8e0",
+                        "surface-container-highest": "#e6e0e9",
+                        "on-tertiary-container": "#503d00",
+                        "surface-bright": "#fdf7ff",
+                        "on-surface-variant": "#494551",
+                        "inverse-primary": "#cfbcff",
+                        "outline": "#7a7582",
+                        "error": "#ba1a1a",
+                        "background": "#fdf7ff",
+                        "on-surface": "#1d1b20",
+                        "inverse-on-surface": "#f5eff7",
+                        "tertiary": "#765b00",
+                        "secondary-fixed": "#e9ddff",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "surface": "#fdf7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Geist"],
+                        "mono-data": ["Geist Mono"],
+                        "headline-sm": ["Geist"],
+                        "title-lg": ["Inter"],
+                        "headline-lg": ["Geist"],
+                        "display": ["Geist"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "mono-data": ["13px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fdf7ff;
+            color: #1d1b20;
+        }
+        .pulse-active {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: pulse-green 2s infinite;
+        }
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md">
+<!-- SideNavBar Shell -->
+<aside class="w-[280px] h-screen fixed left-0 top-0 hidden lg:flex flex-col bg-surface border-r border-outline-variant shadow-sm py-6 z-50">
+<div class="px-6 mb-8 flex items-center gap-3">
+<img alt="Logo" class="w-12 h-12 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs3D30YkWV02CV2vEbvjH3BYeh264_XgDw9oOjRI3m1339sUDpWGdVH4Z6vXZNlQGAvCQ9GujY1YBzjgsqVHcyplH8xriY5EJEVUrebGw_EtTPEClTsdQT_XJykfyDcX0LGlbgRGqmN3GizG50AO0qXCp1hbzpsYfO2sW4MlbW1Ou4WevWNnex2ANlpMhnGzJCB_-1wRuhf8I6Jhf_AT2oijHbrc62-HJaJloDg3y8flDfUEAY1CBdxAQzlgzoXuYvVTkhYd65iuU3"/>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary leading-tight">RFID Honesty</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Management Console</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1 px-3">
+<a class="flex items-center px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<!-- Active State: Products -->
+<a class="flex items-center px-3 py-2.5 rounded-lg text-primary font-bold border-r-4 border-primary bg-primary/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">inventory_2</span>
+<span class="font-label-md text-label-md">Products</span>
+</a>
+<a class="flex items-center px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">shelves</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">receipt_long</span>
+<span class="font-label-md text-label-md">Transactions</span>
+</a>
+<a class="flex items-center px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">contactless</span>
+<span class="font-label-md text-label-md">RFID Accounts</span>
+</a>
+<a class="flex items-center px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">request_quote</span>
+<span class="font-label-md text-label-md">Debt Management</span>
+</a>
+<a class="flex items-center px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">payments</span>
+<span class="font-label-md text-label-md">Payments</span>
+</a>
+<a class="flex items-center px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">bar_chart</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="px-3 mt-auto">
+<button class="flex items-center w-full px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200">
+<span class="material-symbols-outlined mr-3">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</button>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="flex justify-between items-center w-full px-6 py-3 lg:pl-[304px] sticky top-0 z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-4 flex-1">
+<button class="lg:hidden p-2 hover:bg-surface-container-low rounded-full">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="relative w-full max-w-md focus-within:ring-2 focus-within:ring-primary/40 rounded-xl overflow-hidden transition-all">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border-none pl-11 pr-4 py-2 font-body-md text-body-md focus:ring-0" placeholder="Search product name, category, or RFID SKU..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-2 mr-4 px-3 py-1 bg-surface-container rounded-full">
+<div class="w-2 h-2 rounded-full bg-green-500 pulse-active"></div>
+<span class="font-label-md text-label-md text-on-surface-variant">RFID Live</span>
+</div>
+<button class="hover:bg-surface-container-low rounded-full p-2 text-on-surface-variant transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-surface-container-low rounded-full p-2 text-on-surface-variant transition-all">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="ml-2 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold overflow-hidden border border-outline-variant">
+<img alt="Admin User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiaZKYiHkV5swTLI83ojD_SQr5XTRoATPy5Ow2VjVfJxukU7HyeI3l3PqEg2deIcFh6EmdPA_tuAyZGbaq4iSWFdvT-vRdJ8bMhql19G0hK8AYkA-u5BfwNp0Li1Qjd6CRFbOD-8zXHPMB83Ht5TTPjdDIH4tZ0U7JRbfApSzH8HPnrPO3CkUQ7j03B9dVv1jm0pdMJAdDqgYSMEj7WHST7UAYRLYf3rrxhZtDtptp0InLwu7iU43zb-oevtTJfvIH1TXUPdzTLISw"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="lg:pl-[304px] min-h-screen pt-8 pb-12 px-6">
+<div class="max-w-[1400px] mx-auto">
+<!-- Page Header Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Product Catalog</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage RFID-tagged inventory items and stock levels.</p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg flex items-center gap-2 font-label-md text-label-md shadow-sm hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+                Add New Product
+            </button>
+</div>
+<!-- Dashboard Filters Bar -->
+<div class="bg-surface border border-outline-variant rounded-xl p-4 mb-6 flex flex-wrap items-center gap-4 shadow-sm">
+<div class="flex flex-col gap-1 flex-1 min-w-[200px]">
+<span class="font-label-md text-label-md text-on-surface-variant px-1">Filter by Category</span>
+<select class="bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md px-3 py-2 focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all">
+<option>All Categories</option>
+<option>Beverages</option>
+<option>Snacks</option>
+<option>Personal Care</option>
+<option>Office Supplies</option>
+</select>
+</div>
+<div class="flex flex-col gap-1 flex-1 min-w-[200px]">
+<span class="font-label-md text-label-md text-on-surface-variant px-1">Stock Status</span>
+<select class="bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md px-3 py-2 focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all">
+<option>All Statuses</option>
+<option>In Stock</option>
+<option>Low Stock</option>
+<option>Out of Stock</option>
+</select>
+</div>
+<div class="flex items-end h-full pt-5">
+<button class="h-[40px] px-4 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-high flex items-center gap-2 font-label-md text-label-md transition-all">
+<span class="material-symbols-outlined">filter_list</span>
+                    More Filters
+                </button>
+</div>
+<div class="flex items-end h-full pt-5">
+<button class="h-[40px] w-[40px] rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-high flex items-center justify-center transition-all">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+</div>
+<!-- Product Data Table Container -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high border-b border-outline-variant">
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Product</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">RFID SKU</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Category</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Price</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-center">Qty</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1: In Stock -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden border border-outline-variant">
+<img alt="Artisan Coffee Blend" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6cmd9aaMGkJw4vcsRMhPisBiXnUYOg0YjQGgF0k1EhZbWoZ3eC7vMFUYo5lItEEAQX1Y1H5pm9NnVpvZpElhB961_xZUmFHGZs73CNlyPiEtFNkR63zQU6N591fhrw1RzUqpIpXShw6rlOb4YgcSrVD_O9xCSmPkXKw5GCxZadUC85cHKwVb2UmJUhapZFCqS2Ha91l5FQeKMuvXsR_Po1IxnEN6C7ymqdI-q_a59vKvTEQJlNHAyxMvukcbZXZo6XRIRESmwQES4"/>
+</div>
+<div>
+<div class="font-body-md text-body-md font-bold text-on-surface">Artisan Coffee Blend</div>
+<div class="font-label-md text-label-md text-on-surface-variant">250g Whole Bean</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">RFID-CF-7742</td>
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface-variant">Beverages</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">$18.50</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-center">42</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-green-500/10 text-green-700 font-label-md text-label-md border border-green-500/20">
+                                In Stock
+                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container hover:text-on-error-container rounded-lg text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Low Stock -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden border border-outline-variant">
+<img alt="Sparkling Water" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8WdvFUQjIv6iVAL-t3aQuUx81nG7nTAO5tjssRFbDDty-MrGXQwfD2jNmMk9ABAADwEWRYkvsBYh6KgHeVRnFsIb5t9X0aNn1GTcAqaO7tgAsNWHCPmmF7wpYjoIA6pi1CXB3CzubYLM_-VT2EjYuM8Gq_z9sht2u7rLjLT-onyuPrufjVVN7be9_Li-sYuX-1Fp-tOjQu497zbORATrhanL8fmppbL6htvGrLbbEUZcRGO5wgonJ-a5VHiupGUeOV830lPH5x0fj"/>
+</div>
+<div>
+<div class="font-body-md text-body-md font-bold text-on-surface">Sparkling Mineral Water</div>
+<div class="font-label-md text-label-md text-on-surface-variant">500ml Glass Bottle</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">RFID-WA-3319</td>
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface-variant">Beverages</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">$3.25</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-center">5</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 font-label-md text-label-md border border-amber-500/20">
+                                Low Stock
+                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container hover:text-on-error-container rounded-lg text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Out of Stock -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden border border-outline-variant opacity-60">
+<img alt="Dark Chocolate Bar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFW2VMdSsvUFGhVIe6c2U2dFaaTt8MVjvcH3thetqMle-xzGW08sirYx1JLLJuyTqhUKyiz5tdojcpzckiTzU3TOzZHK42rWUTjK8-Y0pUxcbLQOMU8K6-Iph6qBI4sejsFU1JS9C7rGzMHJvFw_W7fXwikO07x6MIWBMHi0DdfNFCriwOQYjPkIyKwA1_d3cCawJR2tty5B97aMzCg6oST0WrZoe_VRFBLDUsE5Q4P2lyzbOUn6TfkMdcGS2pv4D8w2CL7okPjE70"/>
+</div>
+<div>
+<div class="font-body-md text-body-md font-bold text-on-surface">70% Dark Chocolate</div>
+<div class="font-label-md text-label-md text-on-surface-variant">Artisan Single Origin</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">RFID-CH-8821</td>
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface-variant">Snacks</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">$5.95</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-center">0</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-red-500/10 text-red-700 font-label-md text-label-md border border-red-500/20">
+                                Out of Stock
+                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container hover:text-on-error-container rounded-lg text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: In Stock -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden border border-outline-variant">
+<img alt="Organic Granola" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYmMEJd2xLH2TOc_LSmDfA-GkuEf7zmDEnrOY09CZPgBE767ps8YJ4DBLvLUJAqUmcrvj2HR_A0jnf0WlIcLZ3KojpZXhd3XnUpCGuFtcGcw2YzNmqyjohKslIn03AqgEBwrm8cOAsdBbNJsrmrEqZ7dEBuu1jT-BpVNOtrBGo6eRIeOfCRDXeHxkbUdHDs400oPeysLqy9EL5oJFq3YbxXtXqBdAU_aB8qjwdsfi7kkyTuUHthz6s8xyFzVt2gg19SOhlgv5JSYF6"/>
+</div>
+<div>
+<div class="font-body-md text-body-md font-bold text-on-surface">Honey Nut Granola</div>
+<div class="font-label-md text-label-md text-on-surface-variant">400g Value Pack</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">RFID-GR-1104</td>
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface-variant">Snacks</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">$7.50</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-center">12</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-green-500/10 text-green-700 font-label-md text-label-md border border-green-500/20">
+                                In Stock
+                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container hover:text-on-error-container rounded-lg text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer/Pagination -->
+<div class="bg-surface-container-low px-6 py-4 flex items-center justify-between border-t border-outline-variant">
+<span class="font-label-md text-label-md text-on-surface-variant">Showing 4 of 128 products</span>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1 rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-high disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="px-3 py-1 rounded bg-primary text-on-primary font-label-md text-label-md">1</button>
+<button class="px-3 py-1 rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-high font-label-md text-label-md">2</button>
+<button class="px-3 py-1 rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-high font-label-md text-label-md">3</button>
+<button class="px-3 py-1 rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Contextual Insights / Bento Grid Element -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface border border-outline-variant p-5 rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<h4 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-4">Inventory Health</h4>
+<div class="flex items-end gap-2">
+<span class="font-headline-md text-headline-md font-bold">92.4%</span>
+<span class="text-green-600 font-label-md text-label-md mb-1 flex items-center">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                            +1.2%
+                        </span>
+</div>
+</div>
+<div class="mt-4 h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[92.4%]"></div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant p-5 rounded-xl shadow-sm">
+<h4 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-4">Stock Alerts</h4>
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface">Low stock items</span>
+<span class="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-700 font-mono-data text-mono-data">14</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface">Out of stock</span>
+<span class="px-2 py-0.5 rounded-full bg-red-500/10 text-red-700 font-mono-data text-mono-data">3</span>
+</div>
+</div>
+</div>
+<div class="bg-primary/5 border border-primary/20 p-5 rounded-xl shadow-sm relative overflow-hidden group">
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-[120px] text-primary/5 group-hover:scale-110 transition-transform duration-500">inventory</span>
+<h4 class="font-label-md text-label-md text-primary font-bold uppercase tracking-widest mb-4">Restock Recommendation</h4>
+<p class="font-body-md text-body-md text-on-surface mb-4">Predictive analysis suggests restocking 'Beverages' within the next 48 hours to avoid stockouts.</p>
+<button class="text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+                    View analysis report
+                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Hover effect for table rows
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.classList.add('shadow-sm', 'z-10', 'relative');
+            });
+            row.addEventListener('mouseleave', () => {
+                row.classList.remove('shadow-sm', 'z-10', 'relative');
+            });
+        });
+
+        // Simple click feedback
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.add('opacity-70');
+                setTimeout(() => this.classList.remove('opacity-70'), 150);
+            });
+        });
+    });
+</script>
+</body></html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NDKC Admin Settings Console</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "primary-fixed": "#e9ddff",
+                "on-secondary-fixed": "#1f1635",
+                "tertiary-fixed": "#ffdf93",
+                "on-secondary-container": "#645a7d",
+                "surface-container-high": "#ece6ee",
+                "primary-container": "#6750a4",
+                "on-primary-fixed-variant": "#4f378a",
+                "outline-variant": "#cbc4d2",
+                "inverse-surface": "#322f35",
+                "on-error-container": "#93000a",
+                "on-secondary-fixed-variant": "#4b4263",
+                "primary-fixed-dim": "#cfbcff",
+                "on-tertiary": "#ffffff",
+                "on-primary-fixed": "#22005d",
+                "on-primary-container": "#e0d2ff",
+                "secondary-fixed-dim": "#cdc0e9",
+                "tertiary-container": "#c9a74d",
+                "surface-tint": "#6750a4",
+                "secondary": "#63597c",
+                "on-background": "#1d1b20",
+                "on-tertiary-fixed": "#241a00",
+                "on-error": "#ffffff",
+                "tertiary-fixed-dim": "#e7c365",
+                "surface-container": "#f2ecf4",
+                "error-container": "#ffdad6",
+                "surface-container-low": "#f8f2fa",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary": "#ffffff",
+                "on-primary": "#ffffff",
+                "surface-variant": "#e6e0e9",
+                "primary": "#4f378a",
+                "secondary-container": "#e1d4fd",
+                "surface-dim": "#ded8e0",
+                "surface-container-highest": "#e6e0e9",
+                "surface-bright": "#fdf7ff",
+                "on-surface-variant": "#494551",
+                "on-tertiary-container": "#503d00",
+                "outline": "#7a7582",
+                "inverse-primary": "#cfbcff",
+                "background": "#fdf7ff",
+                "error": "#ba1a1a",
+                "on-surface": "#1d1b20",
+                "tertiary": "#765b00",
+                "secondary-fixed": "#e9ddff",
+                "on-tertiary-fixed-variant": "#594400",
+                "inverse-on-surface": "#f5eff7",
+                "surface": "#fdf7ff"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "container-padding": "24px",
+                "card-gap": "20px",
+                "base": "4px",
+                "gutter": "16px",
+                "section-margin": "32px"
+            },
+            "fontFamily": {
+                "display": ["Geist"],
+                "body-md": ["Inter"],
+                "headline-md": ["Geist"],
+                "body-lg": ["Inter"],
+                "headline-lg": ["Geist"],
+                "mono-data": ["Geist Mono"],
+                "label-md": ["Geist"],
+                "headline-sm": ["Geist"],
+                "title-lg": ["Inter"]
+            },
+            "fontSize": {
+                "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "mono-data": ["13px", {"lineHeight": "16px", "fontWeight": "400"}],
+                "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-active {
+            background-color: rgba(103, 80, 164, 0.1);
+            border-right: 4px solid #4f378a;
+            color: #4f378a;
+            font-weight: 700;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbc4d2;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface-container-low dark:bg-surface-dim border-r border-outline-variant dark:border-outline shadow-sm dark:shadow-none flex flex-col h-full py-6 z-50">
+<div class="px-6 mb-8 flex items-center gap-3">
+<img alt="NDKC Logo" class="w-12 h-12 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmibt_DcAt9zXArL2dnItgHpsR4OuphHwqIZogcZ_VDlVwVxSF9F3iBn_z5OMCPofTLJ1IZaugndVifiqPNSoF_mLz6Ko9TkG2BbLYUIOC3Lb-UZtL-nX6szMclDfXUMY5KoGcOEqa81yNYzLGCLUyimh-OZn5otzQCRU-bPYVUcRYuo7kRobu_ncgHHtKAUCwnfwhtDs4zVECI668cBAeOwutYPOp4fFtIAD-z9Ck006TFHl-tmMjRgSvqnxuxTcopLpEHaM574x-"/>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed-dim leading-tight">NDKC Store</h1>
+<p class="text-label-md font-label-md text-on-surface-variant">RFID Admin Portal</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto custom-scrollbar px-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 font-medium rounded-lg" href="#" onclick="switchTab('dashboard')">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<div class="pt-4 pb-2 px-4 text-[10px] uppercase tracking-widest text-outline font-bold">Store Control</div>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 font-medium rounded-lg" href="#" onclick="switchTab('profile')">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Admin Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 font-medium rounded-lg" href="#" onclick="switchTab('users')">
+<span class="material-symbols-outlined" data-icon="group_manage">group_add</span>
+<span class="font-label-md text-label-md">User Roles</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 sidebar-active transition-colors duration-200 rounded-lg" href="#" onclick="switchTab('honesty')">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-md text-label-md">Honesty System</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 font-medium rounded-lg" href="#" onclick="switchTab('rfid')">
+<span class="material-symbols-outlined" data-icon="contactless">contactless</span>
+<span class="font-label-md text-label-md">RFID Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 font-medium rounded-lg" href="#" onclick="switchTab('inventory')">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory Config</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 font-medium rounded-lg" href="#" onclick="switchTab('pos')">
+<span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
+<span class="font-label-md text-label-md">POS Settings</span>
+</a>
+<div class="pt-4 pb-2 px-4 text-[10px] uppercase tracking-widest text-outline font-bold">System Maintenance</div>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 font-medium rounded-lg" href="#" onclick="switchTab('notifications')">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-md text-label-md">Notifications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 font-medium rounded-lg" href="#" onclick="switchTab('preferences')">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Preferences</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 font-medium rounded-lg" href="#" onclick="switchTab('security')">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span class="font-label-md text-label-md">Security &amp; Audit</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 font-medium rounded-lg" href="#" onclick="switchTab('backup')">
+<span class="material-symbols-outlined" data-icon="backup">backup</span>
+<span class="font-label-md text-label-md">Data Backup</span>
+</a>
+</nav>
+<div class="mt-auto px-6 pt-4 border-t border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">AD</div>
+<div class="overflow-hidden">
+<p class="text-label-md font-bold truncate">Admin User</p>
+<p class="text-[10px] text-on-surface-variant truncate">Master Administrator</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] w-[calc(100%-280px)] h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="flex justify-between items-center h-16 px-gutter sticky top-0 z-40 bg-surface-container-lowest dark:bg-surface border-b border-outline-variant dark:border-outline shadow-sm">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-sm text-headline-sm text-primary">Admin Console / Settings</h2>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-label-md font-label-md text-on-surface-variant">RFID Hub Active</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<input class="w-64 bg-surface-container-low border-none rounded-full px-4 py-2 text-body-md focus:ring-2 focus:ring-primary/40 outline-none" placeholder="Search settings..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2 text-on-surface-variant text-sm" data-icon="search">search</span>
+</div>
+<button class="hover:bg-surface-variant/20 rounded-full p-2 text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md flex items-center gap-2 hover:brightness-110 transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-sm" data-icon="save">save</span>
+                    Save Changes
+                </button>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 overflow-y-auto p-8 bg-surface-container-lowest custom-scrollbar">
+<div class="max-w-6xl mx-auto space-y-10 pb-20">
+<!-- Section 3: Honesty / Debt System Rules (HIGHLIGHTED) -->
+<section class="relative overflow-hidden p-8 rounded-xl border border-primary/20 bg-gradient-to-br from-primary-fixed to-surface-bright shadow-lg" id="honesty-section">
+<div class="absolute -right-16 -top-16 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="flex items-center gap-4 mb-8">
+<div class="w-12 h-12 rounded-xl bg-primary text-on-primary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-2xl" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Honesty &amp; Debt Rules</h3>
+<p class="text-on-surface-variant font-body-md">Configure the core parameters of the store's credit system.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Debt Limit Card -->
+<div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-white/40 shadow-sm">
+<label class="block text-label-md font-bold mb-2 uppercase text-primary">Max Debt Limit</label>
+<div class="flex items-center gap-3">
+<span class="text-headline-sm font-mono-data">₱</span>
+<input class="w-full text-headline-sm font-bold bg-transparent border-b-2 border-primary-fixed focus:border-primary outline-none transition-colors" type="number" value="500"/>
+</div>
+<p class="mt-4 text-[11px] text-on-surface-variant italic">Users cannot purchase items on credit if they exceed this amount.</p>
+</div>
+<!-- Grace Period -->
+<div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-white/40 shadow-sm">
+<label class="block text-label-md font-bold mb-2 uppercase text-primary">Settlement Deadline</label>
+<select class="w-full bg-surface-container border-none rounded-lg p-3 text-body-md focus:ring-2 focus:ring-primary/40">
+<option>15 Days</option>
+<option selected="">30 Days (End of Month)</option>
+<option>45 Days</option>
+</select>
+<div class="mt-4 flex items-center gap-2">
+<input checked="" class="rounded text-primary border-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-md">Auto-block overdue accounts</span>
+</div>
+</div>
+<!-- Policy Text -->
+<div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-white/40 shadow-sm flex flex-col justify-between">
+<label class="block text-label-md font-bold mb-2 uppercase text-primary">Credit Eligibility</label>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-body-md">
+<span>Faculty</span>
+<div class="w-10 h-5 bg-primary rounded-full relative"><div class="absolute right-1 top-1 w-3 h-3 bg-white rounded-full"></div></div>
+</div>
+<div class="flex justify-between items-center text-body-md">
+<span>Staff</span>
+<div class="w-10 h-5 bg-primary rounded-full relative"><div class="absolute right-1 top-1 w-3 h-3 bg-white rounded-full"></div></div>
+</div>
+<div class="flex justify-between items-center text-body-md text-on-surface-variant">
+<span>Guest / Student</span>
+<div class="w-10 h-5 bg-outline-variant rounded-full relative"><div class="absolute left-1 top-1 w-3 h-3 bg-white rounded-full"></div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Section 4: RFID System Settings (HIGHLIGHTED) -->
+<section class="p-6 rounded-xl border border-tertiary-container bg-tertiary-fixed/10 space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container text-on-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-tertiary-container">RFID Reader Config</h3>
+</div>
+<div class="space-y-4">
+<div class="bg-white p-4 rounded-lg border border-outline-variant flex items-center justify-between">
+<div>
+<p class="font-bold text-body-md">Scanning Mode</p>
+<p class="text-label-md text-on-surface-variant">Choose how the system handles card taps.</p>
+</div>
+<div class="flex bg-surface-container rounded-lg p-1">
+<button class="px-3 py-1 text-xs font-bold bg-white shadow-sm rounded-md">Auto-Login</button>
+<button class="px-3 py-1 text-xs text-on-surface-variant">Tap-to-Confirm</button>
+</div>
+</div>
+<div class="bg-white p-4 rounded-lg border border-outline-variant">
+<div class="flex justify-between items-center mb-4">
+<p class="font-bold text-body-md">Duplicate Protection Delay</p>
+<span class="text-primary font-mono-data">350ms</span>
+</div>
+<input class="w-full accent-primary" max="1000" min="100" step="50" type="range" value="350"/>
+<div class="flex justify-between text-[10px] text-outline mt-1">
+<span>Sensitive</span>
+<span>Standard</span>
+<span>High Latency</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 1: Admin Profile -->
+<section class="p-6 rounded-xl border border-outline-variant bg-surface-container-lowest space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+</div>
+<h3 class="font-title-lg text-title-lg">Account &amp; Security</h3>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-lg bg-surface-container-low border border-dashed border-outline-variant">
+<div class="w-16 h-16 rounded-full bg-primary/10 overflow-hidden border-2 border-white">
+<img alt="Admin Avatar" class="w-full h-full object-cover" data-alt="A professional studio headshot of a business administrator in a modern office. Soft rim lighting with a clean, high-key white background. The subject is wearing a navy blazer and has a confident, welcoming expression. Minimalist and corporate aesthetic with primary blue accents in the background details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9KCjjKtarD6c2dC5CotC2g9A2Tcq60dmDWySO8dKe79YMters-zH3frURpX93C55Hjp9FcinFqJ73FfPPEvuPhb64e_zeyThgSFcnbiez4FF_jxi3eMeJsYIdz4fpKeSwK3rsuYZ5EeZK_ro_J_cFPshpP3_cTh3NlqH4-DtBebe7hYTMkchSHSTGwfSqf7bAHF_fbUuw0pll1l-l5fpxYpHhevAVxW2R20xVsXKsB4XGV4z1QeO4I6T5Hxsn-Pyfxo0zOJRrle7q"/>
+</div>
+<div class="flex-1">
+<p class="font-bold text-body-lg">John Dominic Admin</p>
+<p class="text-label-md text-on-surface-variant">admin@ndkc.edu.ph</p>
+</div>
+<button class="text-primary font-label-md underline">Edit</button>
+</div>
+<div class="flex items-center justify-between text-body-md p-2">
+<span class="text-on-surface-variant">Last Login:</span>
+<span class="font-mono-data">Oct 24, 2023 • 08:45 AM</span>
+</div>
+</section>
+</div>
+<!-- Bento Grid for Other Settings -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- User Management -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl hover:shadow-md transition-shadow">
+<div class="flex items-center gap-3 mb-4 text-primary">
+<span class="material-symbols-outlined" data-icon="manage_accounts">manage_accounts</span>
+<h4 class="font-bold text-body-lg">User &amp; Roles</h4>
+</div>
+<ul class="space-y-3">
+<li class="flex justify-between items-center text-body-md border-b border-outline-variant/30 pb-2">
+<span>Total Users</span>
+<span class="font-bold">156</span>
+</li>
+<li class="flex justify-between items-center text-body-md border-b border-outline-variant/30 pb-2">
+<span>Pending RFID</span>
+<span class="text-error font-bold">12</span>
+</li>
+</ul>
+<button class="mt-6 w-full py-2 rounded-lg bg-surface-container-high font-label-md hover:bg-surface-variant/30 transition-colors">Manage Directory</button>
+</div>
+<!-- Inventory Settings -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl hover:shadow-md transition-shadow">
+<div class="flex items-center gap-3 mb-4 text-primary">
+<span class="material-symbols-outlined" data-icon="inventory">inventory</span>
+<h4 class="font-bold text-body-lg">Inventory Rules</h4>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-body-md">Low Stock Alert at:</span>
+<span class="font-mono-data bg-error-container text-on-error-container px-2 py-0.5 rounded text-xs">&lt; 10 units</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-body-md">Allow Negative Stock</span>
+<div class="w-10 h-5 bg-outline-variant rounded-full relative"><div class="absolute left-1 top-1 w-3 h-3 bg-white rounded-full"></div></div>
+</div>
+</div>
+</div>
+<!-- Transaction Settings -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl hover:shadow-md transition-shadow">
+<div class="flex items-center gap-3 mb-4 text-primary">
+<span class="material-symbols-outlined" data-icon="receipt">receipt</span>
+<h4 class="font-bold text-body-lg">POS &amp; Receipts</h4>
+</div>
+<div class="space-y-2">
+<p class="text-label-md font-bold text-outline">Active Methods</p>
+<div class="flex gap-2 flex-wrap">
+<span class="bg-primary-fixed text-primary px-3 py-1 rounded-full text-[10px] font-bold">RFID DEBT</span>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold">CASH</span>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold opacity-50">E-WALLET</span>
+</div>
+</div>
+</div>
+<!-- Notification Settings -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl">
+<div class="flex items-center gap-3 mb-4 text-primary">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+<h4 class="font-bold text-body-lg">Alert Channels</h4>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-body-md">
+<span>Daily Summary Email</span>
+<input checked="" class="rounded text-primary border-primary" type="checkbox"/>
+</div>
+<div class="flex items-center justify-between text-body-md">
+<span>Critical Stock SMS</span>
+<input class="rounded text-primary border-primary" type="checkbox"/>
+</div>
+</div>
+</div>
+<!-- Security & Audit -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl lg:col-span-2">
+<div class="flex items-center gap-3 mb-4 text-primary">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<h4 class="font-bold text-body-lg">Security &amp; Access Control</h4>
+</div>
+<div class="grid grid-cols-2 gap-8">
+<div class="space-y-4">
+<div class="flex justify-between items-center text-body-md">
+<span>Session Timeout</span>
+<select class="border-none bg-surface-container-low text-xs rounded p-1">
+<option>30 Minutes</option>
+<option selected="">2 Hours</option>
+</select>
+</div>
+<button class="w-full flex items-center justify-center gap-2 py-2 rounded border border-outline text-label-md hover:bg-surface-container">
+<span class="material-symbols-outlined text-sm" data-icon="list_alt">list_alt</span> View Audit Logs
+                                </button>
+</div>
+<div class="bg-surface-container p-3 rounded-lg flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary" data-icon="info">info</span>
+<p class="text-[11px] leading-relaxed">Login attempts are restricted to 5 failures per 15 minutes. Global lockout policy is enabled.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Backup & Recovery Footer Section -->
+<section class="bg-on-surface text-surface p-8 rounded-2xl shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="flex items-center gap-6">
+<div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl" data-icon="cloud_sync" style="font-variation-settings: 'FILL' 1;">cloud_sync</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm">Firestore Backup Engine</h3>
+<p class="text-surface-variant/70 text-body-md">Last automated backup: Today, 03:00 AM</p>
+</div>
+</div>
+<div class="flex gap-4 w-full md:w-auto">
+<button class="flex-1 md:flex-none px-6 py-3 bg-white text-on-surface rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+                            Export Reports
+                        </button>
+<button class="flex-1 md:flex-none px-6 py-3 bg-primary-container text-on-primary-container rounded-xl font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+                            Restore Data
+                        </button>
+</div>
+</section>
+</div>
+</div>
+</main>
+<script>
+        function switchTab(tabId) {
+            // Visual logic for navigation state
+            const links = document.querySelectorAll('aside nav a');
+            links.forEach(link => {
+                link.classList.remove('sidebar-active');
+                link.classList.add('text-on-surface-variant');
+                link.classList.remove('font-bold');
+                
+                const icon = link.querySelector('.material-symbols-outlined');
+                if (icon) icon.style.fontVariationSettings = "'FILL' 0";
+            });
+
+            const activeLink = Array.from(links).find(link => link.onclick.toString().includes(tabId));
+            if (activeLink) {
+                activeLink.classList.add('sidebar-active');
+                activeLink.classList.remove('text-on-surface-variant');
+                const icon = activeLink.querySelector('.material-symbols-outlined');
+                if (icon) icon.style.fontVariationSettings = "'FILL' 1";
+            }
+
+            // Smooth scroll to section if on the current page
+            const target = document.getElementById(tabId + '-section');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Pulse the live feed indicator
+        setInterval(() => {
+            const dot = document.querySelector('.animate-pulse');
+            if (dot) {
+                dot.classList.toggle('opacity-50');
+            }
+        }, 1000);
+    </script>
+</body></html>
