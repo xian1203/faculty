@@ -1,23 +1,13 @@
-import {
-  BarChart3,
-  Contact,
-  CreditCard,
-  FileText,
-  LayoutDashboard,
-  Package,
-  Receipt,
-  Settings,
-} from 'lucide-react';
+import { ChartBar as BarChart3, Contact, CreditCard, FileText, LayoutDashboard, Package, Receipt, Settings } from 'lucide-react';
 import type { UserRole } from '@/firebase/types';
 import type { NavigationGroup, NavigationItem } from './types';
 
-const NDKC_LOGO =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuAs3D30YkWV02CV2vEbvjH3BYeh264_XgDw9oOjRI3m1339sUDpWGdVH4Z6vXZNlQGAvCQ9GujY1YBzjgsqVHcyplH8xriY5EJEVUrebGw_EtTPEClTsdQT_XJykfyDcX0LGlbgRGqmN3GizG50AO0qXCp1hbzpsYfO2sW4MlbW1Ou4WevWNnex2ANlpMhnGzJCB_-1wRuhf8I6Jhf_AT2oijHbrc62-HJaJloDg3y8flDfUEAY1CBdxAQzlgzoXuYvVTkhYd65iuU3';
+import NDKCseal from '@/assets/NDKCseal.png';
 
 export const SIDEBAR_BRAND = {
   title: 'admin',
   subtitle: 'Management Console',
-  logoSrc: NDKC_LOGO,
+  logoSrc: NDKCseal,
   logoAlt: 'NDKC Logo',
 } as const;
 

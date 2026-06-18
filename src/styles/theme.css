@@ -103,10 +103,18 @@
   --sidebar-foreground: #FFFFFF;
   --sidebar-primary: #4F7CFF;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #25252B;
+  --sidebar-accent: #1E1E24;
   --sidebar-accent-foreground: #FFFFFF;
   --sidebar-border: #2A2A30;
   --sidebar-ring: #4F7CFF;
+
+  /* Success, warning, info */
+  --success: #22c55e;
+  --success-foreground: #FFFFFF;
+  --warning: #f59e0b;
+  --warning-foreground: #FFFFFF;
+  --info: #4F7CFF;
+  --info-foreground: #FFFFFF;
 }
 
 @theme inline {
@@ -157,6 +165,14 @@
   --color-outline-variant: var(--border);
   --color-on-primary: var(--primary-foreground);
   --color-on-background: var(--foreground);
+
+  /* Status colors */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
 }
 
 @layer base {

@@ -30,8 +30,9 @@ export function SidebarItem({ item }: SidebarItemProps) {
           to={item.href}
           end={item.exact ?? item.href === '/'}
           aria-current={isActive ? 'page' : undefined}
+          className="transition-all duration-200 hover:translate-x-0.5"
         >
-          <Icon aria-hidden="true" />
+          <Icon aria-hidden="true" className="transition-transform duration-200 group-hover:scale-110" />
           <span>{item.label}</span>
         </NavLink>
       </SidebarMenuButton>

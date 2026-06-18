@@ -28,7 +28,7 @@ function SidebarBrand() {
 
   return (
     <div className="flex items-center gap-3 px-1 py-1">
-      <div className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-sidebar-border bg-background shadow-sm">
+      <div className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-sidebar-border bg-sidebar-accent/50 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-105">
         <img
           src={SIDEBAR_BRAND.logoSrc}
           alt={SIDEBAR_BRAND.logoAlt}
@@ -37,10 +37,10 @@ function SidebarBrand() {
       </div>
       {!isCollapsed && (
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-sidebar-primary">
+          <p className="truncate text-sm font-bold text-sidebar-primary tracking-tight">
             {SIDEBAR_BRAND.title}
           </p>
-          <p className="truncate text-xs text-sidebar-foreground/70">
+          <p className="truncate text-[11px] text-sidebar-foreground/60 font-medium">
             {SIDEBAR_BRAND.subtitle}
           </p>
         </div>
@@ -59,13 +59,18 @@ function SidebarUserSummary() {
   }
 
   return (
-    <div className="rounded-lg border border-sidebar-border bg-sidebar-accent/40 px-3 py-2">
-      <p className="truncate text-xs font-medium text-sidebar-foreground">
-        {currentUser.name}
-      </p>
-      <p className="truncate text-[11px] capitalize text-sidebar-foreground/60">
-        {currentUser.role}
-      </p>
+    <div className="rounded-xl border border-sidebar-border bg-sidebar-accent/50 px-3 py-2.5 flex items-center gap-2.5">
+      <div className="w-7 h-7 rounded-full bg-sidebar-primary/15 flex items-center justify-center text-sidebar-primary font-bold text-[10px] shrink-0 border border-sidebar-primary/20">
+        {currentUser.name?.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2) || 'U'}
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-xs font-semibold text-sidebar-foreground">
+          {currentUser.name}
+        </p>
+        <p className="truncate text-[10px] capitalize text-sidebar-foreground/50 font-medium">
+          {currentUser.role}
+        </p>
+      </div>
     </div>
   );
 }
@@ -91,7 +96,7 @@ function SidebarFooterActions() {
   };
 
   return (
-    <SidebarMenu>
+    <SidebarMenu className="gap-1">
       {isCollapsed ? (
         <SidebarMenuItem>
           <SidebarMenuButton
@@ -100,7 +105,7 @@ function SidebarFooterActions() {
               closeMobileSidebar();
               navigate('/transactions');
             }}
-            className="bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary/90 hover:text-sidebar-primary-foreground"
+            className="bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary/90 hover:text-sidebar-primary-foreground transition-all duration-200 hover:scale-105 active:scale-95"
           >
             <Plus aria-hidden="true" />
             <span>New Transaction</span>
@@ -109,7 +114,7 @@ function SidebarFooterActions() {
       ) : (
         <SidebarMenuItem className="px-0">
           <Button
-            className="h-9 w-full justify-start gap-2 shadow-sm"
+            className="h-9 w-full justify-start gap-2 shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02] active:scale-95"
             onClick={() => {
               closeMobileSidebar();
               navigate('/transactions');
@@ -125,9 +130,9 @@ function SidebarFooterActions() {
         <SidebarMenuButton
           tooltip="Sign out"
           onClick={handleLogout}
-          className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+          className="text-destructive hover:bg-destructive/10 hover:text-destructive transition-all duration-200 active:scale-95"
         >
-          <LogOut aria-hidden="true" />
+          <LogOut aria-hidden="true" className="size-4" />
           <span>Sign out</span>
         </SidebarMenuButton>
       </SidebarMenuItem>

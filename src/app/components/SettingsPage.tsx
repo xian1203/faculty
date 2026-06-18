@@ -36,10 +36,10 @@ export function SettingsPage() {
                 <NavLink
                   to={`/settings/${item.id}`}
                   className={cn(
-                    'flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 w-full text-left text-sm font-medium',
+                    'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 w-full text-left text-sm font-medium group',
                     isActive
                       ? 'bg-primary/10 border-r-4 border-primary text-primary font-bold'
-                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                      : 'text-muted-foreground hover:bg-muted hover:text-foreground hover:translate-x-0.5'
                   )}
                 >
                   <span

@@ -86,26 +86,26 @@ function transformOrder(order: Order) {
 }
 
 const STATUS_CONFIG: Record<string, { bg: string; text: string; dot: string; label: string }> = {
-  Paid:       { bg: 'bg-green-50 border-green-200',  text: 'text-green-700',  dot: 'bg-green-500',  label: 'Paid' },
-  Pending:    { bg: 'bg-amber-50 border-amber-200',  text: 'text-amber-700',  dot: 'bg-amber-500',  label: 'Pending' },
-  Processing: { bg: 'bg-blue-50 border-blue-200',    text: 'text-blue-700',   dot: 'bg-blue-500',   label: 'Processing' },
+  Paid:       { bg: 'bg-green-50 border-green-200 dark:bg-green-500/15 dark:border-green-500/25',  text: 'text-green-700 dark:text-green-400',  dot: 'bg-green-500',  label: 'Paid' },
+  Pending:    { bg: 'bg-amber-50 border-amber-200 dark:bg-amber-500/15 dark:border-amber-500/25',  text: 'text-amber-700 dark:text-amber-400',  dot: 'bg-amber-500',  label: 'Pending' },
+  Processing: { bg: 'bg-blue-50 border-blue-200 dark:bg-blue-500/15 dark:border-blue-500/25',    text: 'text-blue-700 dark:text-blue-400',   dot: 'bg-blue-500',   label: 'Processing' },
 };
 
 const METHOD_CONFIG: Record<string, { bg: string; text: string; icon: string }> = {
-  'GCash':     { bg: 'bg-primary/10', text: 'text-primary',   icon: 'qr_code_2' },
-  'Pay Later': { bg: 'bg-amber-100', text: 'text-amber-700', icon: 'schedule' },
-  'Cash':      { bg: 'bg-green-100', text: 'text-green-700', icon: 'payments' },
+  'GCash':     { bg: 'bg-primary/10 dark:bg-primary/15', text: 'text-primary dark:text-primary/90',   icon: 'qr_code_2' },
+  'Pay Later': { bg: 'bg-amber-100 dark:bg-amber-500/15', text: 'text-amber-700 dark:text-amber-400', icon: 'schedule' },
+  'Cash':      { bg: 'bg-green-100 dark:bg-green-500/15', text: 'text-green-700 dark:text-green-400', icon: 'payments' },
 };
 
 const AVATAR_COLORS = [
-  'bg-violet-100 text-violet-700',
-  'bg-sky-100 text-sky-700',
-  'bg-rose-100 text-rose-700',
-  'bg-amber-100 text-amber-700',
-  'bg-emerald-100 text-emerald-700',
-  'bg-indigo-100 text-indigo-700',
-  'bg-pink-100 text-pink-700',
-  'bg-teal-100 text-teal-700',
+  'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400',
+  'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400',
+  'bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400',
+  'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400',
+  'bg-teal-100 text-teal-700 dark:bg-teal-500/20 dark:text-teal-400',
+  'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-400',
+  'bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400',
+  'bg-cyan-100 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-400',
 ];
 
 export function TransactionsPage() {
@@ -188,58 +188,75 @@ export function TransactionsPage() {
             </div>
 
             {/* Stat Cards */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                {
-                  label: "Today's Volume",
-                  value: `₱${totalVolume.toLocaleString()}.00`,
-                  sub: '+12.5% from yesterday',
-                  subColor: 'text-green-600',
-                  icon: 'analytics',
-                  iconBg: 'bg-primary/10 text-primary',
-                  trend: 'trending_up',
-                },
-                {
-                  label: 'Total Transactions',
-                  value: transformedTransactions.length.toString(),
-                  sub: 'Recorded today',
-                  subColor: 'text-muted-foreground',
-                  icon: 'receipt_long',
-                  iconBg: 'bg-blue-100 text-blue-700',
-                },
-                {
-                  label: 'Pending Payments',
-                  value: `₱${pendingTotal.toLocaleString()}.00`,
-                  sub: `${pendingCount} transactions`,
-                  subColor: 'text-amber-700',
-                  icon: 'history_toggle_off',
-                  iconBg: 'bg-amber-100 text-amber-700',
-                },
-                {
-                  label: 'Avg. Transaction',
-                  value: `₱${avgValue.toLocaleString()}`,
-                  sub: 'Consistent with weekly avg.',
-                  subColor: 'text-muted-foreground',
-                  icon: 'payments',
-                  iconBg: 'bg-violet-100 text-violet-700',
-                },
-              ].map((stat, i) => (
-                <Card key={i} className="shadow-sm hover:shadow-md transition-shadow">
-                  <CardContent className="p-5">
-                    <div className="flex items-start justify-between mb-3">
-                      <span className="text-xs text-muted-foreground">{stat.label}</span>
-                      <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center', stat.iconBg)}>
-                        <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: '"FILL" 1' }}>
-                          {stat.icon}
-                        </span>
+            {loading ? (
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <Card key={i} className="shadow-sm">
+                    <CardContent className="p-5">
+                      <div className="flex items-start justify-between mb-3">
+                        <Skeleton className="h-3 w-24" />
+                        <Skeleton className="size-8 rounded-lg" />
                       </div>
-                    </div>
-                    <p className="text-2xl font-semibold tracking-tight">{stat.value}</p>
-                    <p className={cn('text-xs mt-1', stat.subColor)}>{stat.sub}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                      <Skeleton className="h-8 w-28 mb-1" />
+                      <Skeleton className="h-3 w-32" />
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  {
+                    label: "Today's Volume",
+                    value: `₱${totalVolume.toLocaleString()}.00`,
+                    sub: '+12.5% from yesterday',
+                    subColor: 'text-green-600 dark:text-green-400',
+                    icon: 'analytics',
+                    iconBg: 'bg-primary/10 text-primary dark:bg-primary/20',
+                    trend: 'trending_up',
+                  },
+                  {
+                    label: 'Total Transactions',
+                    value: transformedTransactions.length.toString(),
+                    sub: 'Recorded today',
+                    subColor: 'text-muted-foreground',
+                    icon: 'receipt_long',
+                    iconBg: 'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400',
+                  },
+                  {
+                    label: 'Pending Payments',
+                    value: `₱${pendingTotal.toLocaleString()}.00`,
+                    sub: `${pendingCount} transactions`,
+                    subColor: 'text-amber-700 dark:text-amber-400',
+                    icon: 'history_toggle_off',
+                    iconBg: 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400',
+                  },
+                  {
+                    label: 'Avg. Transaction',
+                    value: `₱${avgValue.toLocaleString()}`,
+                    sub: 'Consistent with weekly avg.',
+                    subColor: 'text-muted-foreground',
+                    icon: 'payments',
+                    iconBg: 'bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-400',
+                  },
+                ].map((stat, i) => (
+                  <Card key={i} className="shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group">
+                    <CardContent className="p-5">
+                      <div className="flex items-start justify-between mb-3">
+                        <span className="text-xs text-muted-foreground font-medium">{stat.label}</span>
+                        <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center transition-transform duration-200 group-hover:scale-110', stat.iconBg)}>
+                          <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: '"FILL" 1' }}>
+                            {stat.icon}
+                          </span>
+                        </div>
+                      </div>
+                      <p className="text-2xl font-semibold tracking-tight">{stat.value}</p>
+                      <p className={cn('text-xs mt-1', stat.subColor)}>{stat.sub}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
 
             {/* Table Card */}
             <Card className="shadow-sm overflow-hidden">
@@ -307,9 +324,14 @@ export function TransactionsPage() {
                   <TableBody>
                     {paged.length === 0 && (
                       <TableRow>
-                        <TableCell colSpan={8} className="text-center py-16 text-muted-foreground text-sm">
-                          <span className="material-symbols-outlined text-4xl block mb-2 opacity-30">receipt_long</span>
-                          No transactions match your filters.
+                        <TableCell colSpan={8} className="text-center py-16">
+                          <div className="flex flex-col items-center">
+                            <div className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mb-3">
+                              <span className="material-symbols-outlined text-[32px] text-muted-foreground/30">receipt_long</span>
+                            </div>
+                            <p className="text-sm font-semibold text-foreground">No transactions found</p>
+                            <p className="text-xs text-muted-foreground mt-1">{loading ? 'Loading transactions...' : 'Transactions will appear here once they come in.'}</p>
+                          </div>
                         </TableCell>
                       </TableRow>
                     )}
